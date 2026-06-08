@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>銷售型演說八大要訣</title>
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --accent: #e94560;
+    --gold: #f5a623;
+    --card-bg: #16213e;
+    --text: #eaeaea;
+    --text-muted: #a0a0b0;
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    background: var(--primary);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+    padding: 24px 20px 20px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  header h1 {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #fff 30%, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  header p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    margin-top: 14px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 16px 20px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    font-weight: 700;
+  }
+
+  .tab:hover:not(.active) {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  main {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── Overview ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.07);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--card-accent, var(--accent));
+    border-radius: 4px 0 0 4px;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .card-number {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--card-accent, var(--accent));
+    opacity: 0.25;
+    position: absolute;
+    top: 12px; right: 16px;
+    line-height: 1;
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .card-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .card-tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    background: rgba(255,255,255,0.08);
+    color: var(--text-muted);
+  }
+
+  /* ── Detail ── */
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .detail-back {
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .detail-back:hover { background: rgba(255,255,255,0.15); }
+
+  .detail-num {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .detail-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .detail-icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+
+  .detail-title {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .detail-divider {
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
+
+  .detail-body { font-size: 0.95rem; line-height: 1.8; color: #d0d0e0; }
+
+  .detail-body h3 {
+    font-size: 1rem;
+    color: var(--gold);
+    margin: 18px 0 8px;
+    font-weight: 700;
+  }
+
+  .detail-body ul {
+    padding-left: 20px;
+  }
+
+  .detail-body li {
+    margin-bottom: 8px;
+    color: #c8c8d8;
+  }
+
+  .detail-body .highlight {
+    background: rgba(233,69,96,0.12);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-style: italic;
+  }
+
+  .detail-body .tip-box {
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 16px 0;
+  }
+
+  .detail-body .tip-box strong { color: var(--gold); }
+
+  .nav-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .nav-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-btn:hover { background: rgba(255,255,255,0.08); }
+  .nav-btn.primary { background: var(--accent); border-color: var(--accent); font-weight: 700; }
+  .nav-btn.primary:hover { background: #d63651; }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+  /* ── Checklist ── */
+  .checklist-intro {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .checklist-item {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .checklist-item.done { border-color: rgba(100,220,120,0.3); }
+
+  .check-box {
+    width: 24px; height: 24px;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+
+  .checklist-item.done .check-box {
+    background: #4caf50;
+    border-color: #4caf50;
+    color: white;
+    font-size: 0.8rem;
+  }
+
+  .check-label { font-size: 0.92rem; line-height: 1.5; }
+  .check-label strong { display: block; margin-bottom: 3px; }
+  .check-label span { color: var(--text-muted); font-size: 0.82rem; }
+
+  .checklist-item.done .check-label strong { text-decoration: line-through; opacity: 0.6; }
+
+  .reset-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { background: rgba(255,255,255,0.06); color: white; }
+
+  /* ── Script ── */
+  .script-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .script-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .script-step:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .step-num {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .step-content strong { display: block; font-size: 0.9rem; margin-bottom: 4px; }
+  .step-content p { font-size: 0.83rem; color: var(--text-muted); line-height: 1.5; }
+
+  .copy-btn {
+    padding: 10px 20px;
+    background: var(--gold);
+    color: #1a1a2e;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: opacity 0.2s;
+  }
+  .copy-btn:hover { opacity: 0.85; }
+
+  @media (max-width: 480px) {
+    .detail-card { padding: 20px 16px; }
+    .overview-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>💼 銷售型演說八大要訣</h1>
+  <p>Sales Mastery · 8 Power Secrets</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</header>
+
+<div class="tabs" id="tabBar">
+  <button class="tab active" onclick="switchTab('overview')">總覽</button>
+  <button class="tab" onclick="switchTab('detail')">詳解</button>
+  <button class="tab" onclick="switchTab('checklist')">演講清單</button>
+  <button class="tab" onclick="switchTab('script')">話術腳本</button>
+</div>
+
+<main>
+
+<!-- ── 總覽 ── -->
+<div class="view active" id="view-overview">
+  <div class="overview-grid" id="overviewGrid"></div>
+</div>
+
+<!-- ── 詳解 ── -->
+<div class="view" id="view-detail">
+  <div class="detail-header">
+    <button class="detail-back" onclick="switchTab('overview')">← 返回</button>
+    <span class="detail-num" id="detailNum"></span>
+  </div>
+  <div class="detail-card" id="detailCard"></div>
+  <div class="nav-btns">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">← 上一個</button>
+    <button class="nav-btn primary" id="nextBtn" onclick="navigate(1)">下一個 →</button>
+  </div>
+</div>
+
+<!-- ── 演講清單 ── -->
+<div class="view" id="view-checklist">
+  <div class="checklist-intro">
+    ✅ 上台前逐一確認，確保每個要訣都已融入您的簡報中。完成後打勾！
+  </div>
+  <div id="checklistItems"></div>
+  <button class="reset-btn" onclick="resetChecklist()">🔄 重置清單</button>
+</div>
+
+<!-- ── 話術腳本 ── -->
+<div class="view" id="view-script">
+  <div class="script-card">
+    <h2 style="font-size:1rem;margin-bottom:4px;">🎤 完整演說流程腳本</h2>
+    <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:16px;">依序套用八大要訣的開場到成交話術框架</p>
+    <div id="scriptSteps"></div>
+  </div>
+  <button class="copy-btn" onclick="copyScript()">📋 複製完整腳本</button>
+</div>
+
+</main>
+
+<script>
+const tips = [
+  {
+    num: 1,
+    icon: '❤️',
+    title: '成交一切都是為了愛',
+    subtitle: '以真誠關懷驅動每一次銷售',
+    tag: '心法基礎',
+    color: '#e94560',
+    body: `
+      <p>銷售的最高境界不是技巧，而是<strong>真心為對方好</strong>。當你相信自己的產品能真正幫助客戶，成交就成為一種服務，而非壓力。</p>
+      <div class="highlight">「我成交你，是因為我不忍心讓你錯過這個機會。」</div>
+      <h3>🔑 核心思維</h3>
+      <ul>
+        <li>把每位客戶當作需要被幫助的朋友</li>
+        <li>相信你的產品/服務真的能改變他的生活</li>
+        <li>帶著使命感走上台，而不是帶著業績壓力</li>
+        <li>拒絕你的人，其實是你還沒讓他感受到你的愛</li>
+      </ul>
+      <div class="tip-box"><strong>💡 實戰提示：</strong> 演說前先在心中默念：「我站在這裡是為了幫助在場的每一個人。」這個心態轉換，會徹底改變你的氣場與說服力。</div>
+    `,
+    script: '各位好！今天我站在這裡，不是要賣給你什麼，而是要和你分享一個可能改變你生命的機會……'
+  },
+  {
+    num: 2,
+    icon: '💎',
+    title: '提供無可取代的價值',
+    subtitle: '讓客戶覺得「只有你」才能做到',
+    tag: '差異化定位',
+    color: '#7c4dff',
+    body: `
+      <p>在競爭激烈的市場中，唯有<strong>獨特且不可取代的價值</strong>才能讓客戶非你不可。你的差異化決定了你是否被比價。</p>
+      <div class="highlight">「市場上有很多選擇，但沒有一個像我們這樣做到……」</div>
+      <h3>🔑 核心思維</h3>
+      <ul>
+        <li>找出你3個競爭對手做不到的點</li>
+        <li>用故事和證明來展現獨特性，而不只是說</li>
+        <li>讓客戶自己說出：「這個只有你有」</li>
+        <li>把你的專業、背景、方法論包裝成獨家資產</li>
+      </ul>
+      <div class="tip-box"><strong>💡 實戰提示：</strong> 準備一張「價值對比表」，用三欄列出：市場一般做法 / 競爭對手 / 你的做法。視覺化呈現，讓差異一目了然。</div>
+    `,
+    script: '市面上有很多類似的選擇，但我必須告訴你，我們和其他人最大的不同是……（獨家價值點）'
+  },
+  {
+    num: 3,
+    icon: '🎯',
+    title: '明確客戶真正要的是什麼',
+    subtitle: '挖掘深層需求，不只是表面問題',
+    tag: '需求洞察',
+    color: '#00bcd4',
+    body: `
+      <p>客戶說出口的需求，往往不是他們真正想要的。偉大的銷售者能<strong>洞察深層動機</strong>，讓客戶感覺「你完全了解我！」</p>
+      <div class="highlight">「你要的不只是這個產品，你真正要的是……」</div>
+      <h3>🔑 深層需求三層次</h3>
+      <ul>
+        <li><strong>表面需求：</strong>功能、價格、規格</li>
+        <li><strong>情感需求：</strong>安全感、被認可、減少痛苦</li>
+        <li><strong>身份需求：</strong>成為什麼樣的人、如何被看見</li>
+      </ul>
+      <h3>🔑 精準提問技巧</h3>
+      <ul>
+        <li>「如果這個問題解決了，你最希望得到的結果是？」</li>
+        <li>「是什麼讓你今天來到這裡？」</li>
+        <li>「這件事對你來說，最重要的是什麼？」</li>
+      </ul>
+      <div class="tip-box"><strong>💡 實戰提示：</strong> 演說中加入一段「你是否有過這樣的經歷……」讓客戶點頭，他們感覺被理解，成交率大幅提升。</div>
+    `,
+    script: '我知道你今天來這裡，表面上是想解決……但我猜，你心底真正渴望的，其實是……對嗎？'
+  },
+  {
+    num: 4,
+    icon: '⚡',
+    title: '提供兩個主要的賣點',
+    subtitle: '聚焦核心優勢，避免資訊過載',
+    tag: '訊息精煉',
+    color: '#ff9800',
+    body: `
+      <p>提供太多賣點等於沒有賣點。研究顯示，人們記得住的通常只有<strong>2-3個核心訊息</strong>。選擇你最強的兩個，反覆強化。</p>
+      <div class="highlight">「記住這兩件事就夠了——第一……第二……」</div>
+      <h3>🔑 選擇賣點的原則</h3>
+      <ul>
+        <li>賣點必須直接對應客戶的核心痛點</li>
+        <li>每個賣點都要有具體數字或故事支撐</li>
+        <li>兩個賣點要形成互補，不要重疊</li>
+        <li>用最簡單的語言說出來（小學生都能懂）</li>
+      </ul>
+      <h3>🔑 兩賣點黃金結構</h3>
+      <ul>
+        <li><strong>賣點A：</strong>解決最大的「痛」</li>
+        <li><strong>賣點B：</strong>帶來最大的「爽」</li>
+      </ul>
+      <div class="tip-box"><strong>💡 實戰提示：</strong> 在演說中至少重複提到這兩個賣點3次：開頭提、中間證明、結尾再次強調。讓它深植在聽眾腦海中。</div>
+    `,
+    script: '在我們所有的優勢中，我想讓你重點記住這兩件事：第一，我們能幫你……第二，我們保證你……'
+  },
+  {
+    num: 5,
+    icon: '⚠️',
+    title: '讓客戶知道不購買的最大損失',
+    subtitle: '啟動損失規避心理，製造行動緊迫感',
+    tag: '痛點放大',
+    color: '#f44336',
+    body: `
+      <p>人類對損失的恐懼，是對獲得渴望的<strong>兩倍</strong>。讓客戶清楚看見「不行動的代價」，比描述好處更能驅動決策。</p>
+      <div class="highlight">「如果今天你選擇不做決定，三個月後你將面對的是……」</div>
+      <h3>🔑 損失框架四步驟</h3>
+      <ul>
+        <li><strong>第一步：</strong>描述現況的真實痛苦</li>
+        <li><strong>第二步：</strong>說明不改變會惡化的趨勢</li>
+        <li><strong>第三步：</strong>量化損失（時間、金錢、機會）</li>
+        <li><strong>第四步：</strong>讓聽眾在心中算出代價</li>
+      </ul>
+      <h3>🔑 常見損失維度</h3>
+      <ul>
+        <li>💸 財務損失：持續浪費或錯失收入</li>
+        <li>⏰ 時間損失：每天消耗在錯誤的方法上</li>
+        <li>😢 情感損失：持續的焦慮、遺憾、後悔</li>
+        <li>🏆 機會損失：別人已經在你前面了</li>
+      </ul>
+      <div class="tip-box"><strong>💡 實戰提示：</strong> 說完損失後，給一個短暫的沉默（3秒），讓聽眾內心感受那個痛。沉默比語言更有力量。</div>
+    `,
+    script: '我必須誠實告訴你，如果今天你什麼都不做，繼續維持現狀，一年後你會……（具體損失描述）。這是我最不希望看到的。'
+  },
+  {
+    num: 6,
+    icon: '📊',
+    title: '價值換算最大化',
+    subtitle: '讓客戶覺得「這個價格太划算了」',
+    tag: '價值錨定',
+    color: '#4caf50',
+    body: `
+      <p>客戶拒絕的永遠不是價格，而是<strong>感知到的價值不足</strong>。讓他們在腦中算清楚：這個投資能帶回多少。</p>
+      <div class="highlight">「如果這能幫你每個月多賺1萬，這個投資只需要……這合理嗎？」</div>
+      <h3>🔑 價值換算公式</h3>
+      <ul>
+        <li><strong>ROI法：</strong>投資回報比 → 花1元賺回10元</li>
+        <li><strong>時間換算：</strong>省了多少時間 × 時薪價值</li>
+        <li><strong>痛苦成本：</strong>不解決每年的損耗是多少</li>
+        <li><strong>堆疊法：</strong>把所有價值加總，再和售價對比</li>
+      </ul>
+      <h3>🔑 價值堆疊示範</h3>
+      <ul>
+        <li>核心課程/產品：價值 NT$XXXXX</li>
+        <li>附贈資源一：價值 NT$XXXX</li>
+        <li>附贈資源二：價值 NT$XXXX</li>
+        <li>終身社群支持：價值 NT$XXXX</li>
+        <li>總價值：NT$XXXXX，今天只需：NT$XXX</li>
+      </ul>
+      <div class="tip-box"><strong>💡 實戰提示：</strong> 報價前先堆疊所有價值，讓聽眾心中已經有一個「應該很貴」的預期，然後揭曉實際價格，落差感創造驚喜與衝動。</div>
+    `,
+    script: '讓我算給你看……（逐項堆疊價值）……加起來總共值多少？但今天你只需要投入……你覺得這個交換，值得嗎？'
+  },
+  {
+    num: 7,
+    icon: '🛡️',
+    title: '直接解決顧客反對問題',
+    subtitle: '提前化解疑慮，讓拒絕無處立足',
+    tag: '異議處理',
+    color: '#9c27b0',
+    body: `
+      <p>與其等客戶提出反對意見，不如<strong>主動在演說中點出並解決</strong>。這展示了你的自信，也消除了最後的心理障礙。</p>
+      <div class="highlight">「我知道你現在心裡可能有個疑問……讓我直接回答你。」</div>
+      <h3>🔑 五大常見反對意見</h3>
+      <ul>
+        <li><strong>「太貴了」</strong> → 換算ROI，對比不行動的成本</li>
+        <li><strong>「我要想想」</strong> → 問清楚在想什麼，立即解決</li>
+        <li><strong>「我沒有時間」</strong> → 說明時間投入 vs. 長期節省</li>
+        <li><strong>「我不確定有沒有效」</strong> → 提供案例、保證、試用</li>
+        <li><strong>「我要問家人/伴侶」</strong> → 邀請一起來，或提供資料</li>
+      </ul>
+      <h3>🔑 異議處理公式</h3>
+      <ul>
+        <li>認同 → 轉折 → 解決 → 確認</li>
+        <li>「我完全理解你這樣想，事實上很多人一開始也這樣覺得，後來他們發現……你覺得這樣OK嗎？」</li>
+      </ul>
+      <div class="tip-box"><strong>💡 實戰提示：</strong> 在演說中設計一段「我猜你現在心裡有個問題……」主動提出TOP3反對意見並解決，這會讓聽眾覺得你非常誠實可信。</div>
+    `,
+    script: '現在我想暫停一下，因為我知道你腦中可能正在想……（反對意見）。這是個很好的問題，讓我直接告訴你……'
+  },
+  {
+    num: 8,
+    icon: '🚀',
+    title: '創造立即行動的理由',
+    subtitle: '消除拖延，讓客戶現在就做決定',
+    tag: '成交收尾',
+    color: '#f5a623',
+    body: `
+      <p>最好的演說如果沒有明確的行動呼籲，等於前功盡棄。你必須給客戶一個<strong>現在就行動</strong>的充分理由，而不是「回去再想想」。</p>
+      <div class="highlight">「機會永遠屬於那些現在就做決定的人。」</div>
+      <h3>🔑 緊迫感製造策略</h3>
+      <ul>
+        <li><strong>數量限制：</strong>「今天只剩XX個名額」</li>
+        <li><strong>時間限制：</strong>「這個優惠只到今晚12點」</li>
+        <li><strong>價格限制：</strong>「現場特惠，離場後恢復原價」</li>
+        <li><strong>機會成本：</strong>「現在做決定的人，明天就開始領先」</li>
+      </ul>
+      <h3>🔑 完美收尾三步驟</h3>
+      <ul>
+        <li><strong>第一步：</strong>重申最大的痛苦與渴望</li>
+        <li><strong>第二步：</strong>重申你的獨特解決方案</li>
+        <li><strong>第三步：</strong>明確告訴他現在該怎麼做</li>
+      </ul>
+      <div class="tip-box"><strong>💡 實戰提示：</strong> 收尾時保持眼神接觸，放慢語速，聲音沉穩有力。說完CTA後，保持安靜等待——第一個說話的人，往往是輸的那個。</div>
+    `,
+    script: '今天站在這裡，我只有一個請求。如果你相信自己值得更好的……（重申價值），那麼請你現在就做這個決定。（清晰說明下一步行動）'
+  }
+];
+
+let currentTip = 0;
+const checks = JSON.parse(localStorage.getItem('salesChecks') || '{}');
+
+function switchTab(tab) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + tab).classList.add('active');
+  const tabMap = { overview: 0, detail: 1, checklist: 2, script: 3 };
+  document.querySelectorAll('.tab')[tabMap[tab]].classList.add('active');
+}
+
+function openTip(index) {
+  currentTip = index;
+  renderDetail();
+  switchTab('detail');
+}
+
+function navigate(dir) {
+  currentTip = Math.max(0, Math.min(tips.length - 1, currentTip + dir));
+  renderDetail();
+}
+
+function renderDetail() {
+  const t = tips[currentTip];
+  document.getElementById('detailNum').textContent = `第 ${t.num} / ${tips.length} 個要訣`;
+  document.getElementById('prevBtn').disabled = currentTip === 0;
+  document.getElementById('nextBtn').disabled = currentTip === tips.length - 1;
+  document.getElementById('detailCard').innerHTML = `
+    <span class="detail-icon">${t.icon}</span>
+    <div class="detail-title" style="color:${t.color}">${t.num}. ${t.title}</div>
+    <div class="detail-divider" style="background:linear-gradient(90deg,${t.color},transparent)"></div>
+    <div class="detail-body">${t.body}</div>
+  `;
+  updateProgress();
+}
+
+function renderOverview() {
+  document.getElementById('overviewGrid').innerHTML = tips.map(t => `
+    <div class="card" style="--card-accent:${t.color}" onclick="openTip(${t.num - 1})">
+      <div class="card-number">${t.num}</div>
+      <span class="card-icon">${t.icon}</span>
+      <div class="card-title">${t.title}</div>
+      <div class="card-subtitle">${t.subtitle}</div>
+      <span class="card-tag">${t.tag}</span>
+    </div>
+  `).join('');
+}
+
+function renderChecklist() {
+  document.getElementById('checklistItems').innerHTML = tips.map(t => `
+    <div class="checklist-item ${checks[t.num] ? 'done' : ''}" id="ci-${t.num}">
+      <div class="check-box" onclick="toggleCheck(${t.num})">${checks[t.num] ? '✓' : ''}</div>
+      <div class="check-label">
+        <strong>${t.icon} ${t.num}. ${t.title}</strong>
+        <span>${t.subtitle}</span>
+      </div>
+    </div>
+  `).join('');
+  updateProgress();
+}
+
+function toggleCheck(num) {
+  checks[num] = !checks[num];
+  localStorage.setItem('salesChecks', JSON.stringify(checks));
+  renderChecklist();
+}
+
+function resetChecklist() {
+  Object.keys(checks).forEach(k => delete checks[k]);
+  localStorage.setItem('salesChecks', JSON.stringify(checks));
+  renderChecklist();
+}
+
+function updateProgress() {
+  const done = Object.values(checks).filter(Boolean).length;
+  document.getElementById('progressFill').style.width = (done / tips.length * 100) + '%';
+}
+
+function renderScript() {
+  document.getElementById('scriptSteps').innerHTML = tips.map(t => `
+    <div class="script-step">
+      <div class="step-num">${t.num}</div>
+      <div class="step-content">
+        <strong>${t.icon} ${t.title}</strong>
+        <p>${t.script}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function copyScript() {
+  const text = tips.map(t => `【${t.num}. ${t.title}】\n${t.script}`).join('\n\n');
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ 已複製！';
+    setTimeout(() => btn.textContent = '📋 複製完整腳本', 2000);
+  });
+}
+
+renderOverview();
+renderChecklist();
+renderScript();
+updateProgress();
+</script>
+</body>
+</html>
